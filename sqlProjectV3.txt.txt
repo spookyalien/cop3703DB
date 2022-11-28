@@ -1,0 +1,202 @@
+CREATE TABLE DEPARTMENT(
+    DCode CHAR(4),
+    DName VARCHAR(40) NOT NULL,
+    College VARCHAR(60) NOT NULL,
+    OfficeNum NUMERIC(6) NOT NULL,
+    OfficePhone CHAR(10) NOT NULL,
+    
+    PRIMARY KEY (DCode)
+);
+
+CREATE TABLE STUDENT(
+    SSN CHAR(9),
+    FName VARCHAR(20) NOT NULL,
+    MidIn CHAR(1),
+    LName VARCHAR(20) NOT NULL,
+    Sex VARCHAR(2) NOT NULL,
+    Nnum CHAR(8) NOT NULL,
+    BDate date NOT NULL,
+    DegProg VARCHAR(5),
+    Seniority CHAR(2) NOT NULL,
+    PermPhone CHAR(10) NOT NULL,
+    PermStreetAddress VARCHAR(50) NOT NULL,
+    PermCity VARCHAR(20) NOT NULL,
+    PermState VARCHAR(15) NOT NULL,
+    PermZip CHAR(5) NOT NULL,
+    CurrPhone CHAR(10) NOT NULL,
+    CurrAddress VARCHAR(100) NOT NULL,
+    
+    PRIMARY KEY (SSN)
+);
+
+CREATE TABLE COURSE (
+    CourseNum NUMERIC(4),
+    CourseName VARCHAR(20) NOT NULL,
+    Description VARCHAR(200),
+    SemHours NUMERIC(1) NOT NULL,
+    Lvl NUMERIC(4),
+    DCode CHAR(4), 
+    
+    PRIMARY KEY (CourseNum),
+    FOREIGN KEY (DCode) REFERENCES DEPARTMENT(DCode)
+);
+
+CREATE TABLE INSTRUCTOR (
+    SSN CHAR(9),
+    Nnum CHAR(8) NOT NULL,
+    City VARCHAR(20) NOT NULL,
+    State CHAR(2) NOT NULL,
+    Zip CHAR(5) NOT NULL,
+    OfficeNum NUMERIC(6) NOT NULL,
+    Age NUMERIC(2) NOT NULL,
+    FName VARCHAR(20) NOT NULL,
+    MidIn CHAR(1),
+    LName VARCHAR(20) NOT NULL,
+    DCode CHAR(4),
+    
+    PRIMARY KEY (SSN),
+    FOREIGN KEY (DCode) REFERENCES DEPARTMENT(DCode)
+);
+
+CREATE TABLE SECTION (
+    Year NUMERIC(4) NOT NULL,
+    Sem VARCHAR(10) NOT NULL,
+    SectionNum NUMERIC(7) NOT NULL,
+    ISSN CHAR(9) NOT NULL,
+    CourseNum NUMERIC(4) NOT NULL,
+    UNIQUE (SectionNum),
+    
+    PRIMARY KEY (Year, Sem, SectionNum, CourseNum),
+    FOREIGN KEY (ISSN) REFERENCES INSTRUCTOR(SSN),
+    FOREIGN KEY (CourseNum) REFERENCES COURSE(CourseNum)
+);
+
+CREATE TABLE MAJOR_IN (
+    StudSSN CHAR(9) NOT NULL,
+    DCode CHAR(4) NOT NULL,
+    
+    PRIMARY KEY (StudSSN, DCode),
+    FOREIGN KEY (StudSSN) REFERENCES STUDENT(SSN),
+    FOREIGN KEY (DCode) REFERENCES DEPARTMENT(DCode)
+);
+
+CREATE TABLE MINOR_IN (
+    StudSSN CHAR(9) NOT NULL,
+    DCode CHAR(4) NOT NULL,
+    
+    PRIMARY KEY (StudSSN, DCode),
+    FOREIGN KEY (StudSSN) REFERENCES STUDENT(SSN),
+    FOREIGN KEY (DCode) REFERENCES DEPARTMENT(DCode)
+);
+
+CREATE TABLE ENROLLED_IN (
+    StudSSN CHAR(9) NOT NULL,
+    SectionNum NUMERIC(7) NOT NULL,     
+    LetterGrade VARCHAR(2), 
+    GradePoint DECIMAL(2,1),
+    
+    PRIMARY KEY (StudSSN, SectionNum),
+    FOREIGN KEY (StudSSN) REFERENCES STUDENT(SSN),
+    FOREIGN KEY (SectionNum) REFERENCES SECTION(SectionNum)
+);
+
+INSERT into STUDENT
+VALUES ('111333555', 'Adam', 'N', 'Abdulhalim', 'M', '01482874', 
+TO_DATE('2002-11-25', 'YYYY-MM-DD'), 'BS', 'Jr', '9047772222', '1999 Circle Drive', 'Jacksonville',
+'FL', '32227', '9042227777', '1 UNF Drive, Jacksonville, FL 32224');
+
+INSERT into STUDENT
+VALUES ('555222000', 'John', 'J', 'Jackson', 'M', '00128999', 
+TO_DATE('2001-09-27', 'YYYY-MM-DD'), 'BS', 'Sr', '9049991212', '3450 Square Boulevard', 'Jacksonville',
+'FL', '32245', '9049991212', '1 UNF Drive, Jacksonville, FL 32224');
+
+INSERT into STUDENT
+VALUES ('999444666', 'Mike', 'M', 'Monroe', 'M', '01992288', 
+TO_DATE('2003-03-12', 'YYYY-MM-DD'), 'BA', 'Fr', '604555000', '6915 Triangle Street', 'Boston',
+'MA', '02108', '9040101111', '1190 Rosewood Avenue, Jacksonville, FL 32246');
+
+INSERT into STUDENT
+VALUES ('000111222', 'Kellie', 'K', 'Kennedy', 'F', '028', 
+TO_DATE('2001-06-02', 'YYYY-MM-DD'), 'BS', 'Jr', '9991110202', '9950 Rectangle Way', 'Houston',
+'TX', '77001', '9045525522', '6250 Ember Road, Jacksonville, FL 32278');
+
+INSERT into Department
+VALUES ('0011', 'Computer Science', 'College of Computing, Engineering, and Construction', 150111, '9040001111');
+
+INSERT into Department
+VALUES ('5888', 'Physics', 'College of Arts and Sciences', 120250, '9045678888');
+
+INSERT into Department
+VALUES ('3300', 'Accounting and Finance', 'Coggin College of Business', 110300, '9049999999');
+
+INSERT into Department
+VALUES ('7725', 'Biology', 'College of Arts and Sciences', 162130, '9048887766');
+
+insert into COURSE values(4233,'Microbial Ecology','This is a test course',3,4000,'7725');
+insert into COURSE values(4201,'Organization Theory','This is a test course',3,4000,'3300');
+insert into COURSE values(3703,'Intro to Databases','This is a test course',3,3000,'0011');
+insert into COURSE values(2049,'Calc-Physics 2','This is a test course',3,2000,'5888');
+insert into INSTRUCTOR values('111111111','01492014','Jacksonville','FL',32225,152384,38,'John','H','Smith','7725');
+insert into INSTRUCTOR values('222222222','01492013','Jacksonville','FL',32224,151384,34,'Vincent','J','Bistricky','3300');
+insert into INSTRUCTOR values('333333333','01492012','Jacksonville','FL',32223,150384,42,'Liam','S','Hanson','0011');
+insert into INSTRUCTOR values('444444444','01492011','Jacksonville','FL',32223,154298,57,'Fred','L','Poorlum','5888');
+
+INSERT INTO SECTION 
+VALUES ('2022', 'Fall', 1234567, '111111111', 3703);
+INSERT INTO SECTION 
+VALUES ('2085', 'Spring', 4204200, '222222222', 2049);
+INSERT INTO SECTION 
+VALUES ('2023', 'Winter', 9876543, '333333333', 4233);
+INSERT INTO SECTION 
+VALUES ('2589', 'Summer', 9999999, '444444444', 4201);
+
+INSERT INTO MAJOR_IN
+VALUES ('000111222', '3300');
+INSERT INTO MAJOR_IN
+VALUES ('111333555', '7725');
+INSERT INTO MAJOR_IN
+VALUES ('555222000', '5888');
+INSERT INTO MAJOR_IN
+VALUES ('999444666', '0011');
+
+INSERT INTO MINOR_IN
+VALUES ('999444666', '5888');
+INSERT INTO MINOR_IN
+VALUES ('555222000', '0011');
+INSERT INTO MINOR_IN
+VALUES ('111333555', '3300');
+INSERT INTO MINOR_IN
+VALUES ('000111222', '7725');
+
+INSERT INTO ENROLLED_IN
+VALUES('000111222', 1234567, 'A', 3.8);
+INSERT INTO ENROLLED_IN
+VALUES('999444666', 4204200, 'F', 0.1);
+INSERT INTO ENROLLED_IN
+VALUES('555222000', 9876543, 'C', 2.7);
+INSERT INTO ENROLLED_IN
+VALUES('111333555', 9999999, 'A', 4.0);
+
+SELECT *
+FROM STUDENT;
+
+SELECT *
+FROM DEPARTMENT;
+
+SELECT *
+FROM INSTRUCTOR;
+
+SELECT *
+FROM COURSE;
+
+SELECT * 
+FROM SECTION;
+
+SELECT *
+FROM MAJOR_IN;
+
+SELECT *
+FROM MINOR_IN;
+
+SELECT * 
+FROM ENROLLED_IN;
