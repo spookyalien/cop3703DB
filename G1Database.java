@@ -344,13 +344,19 @@ public class sqlproject {
 				System.out.print("\nEnter Grade Point: ");
 				float gp = getFloat();
 			
-				PreparedStatement stmnt6 = conn.prepareStatement("UPDATE ENROLLED_IN SET LetterGrade = ? WHERE StudSSN = ?");
+				PreparedStatement stmnt61 = conn.prepareStatement("UPDATE ENROLLED_IN SET LetterGrade = ? WHERE StudSSN = ?");
+				PreparedStatement stmnt62 = conn.prepareStatement("UPDATE ENROLLED_IN SET GradePoint = ? WHERE StudSSN = ?");
 				
-				stmnt6.setString(1, lg);
-				stmnt6.setString(2, sSSN);
+				stmnt61.setString(1, lg);
+				stmnt61.setString(2, sSSN);
+				stmnt62.setFloat(1, gp);
+				stmnt62.setString(2, sSSN);
 				
-				int numRows6 = stmnt6.executeUpdate();
-				System.out.println("\n" + numRows6 + " row(s) inserted");
+				int numRows61 = stmnt61.executeUpdate();
+				int numRows62 = stmnt62.executeUpdate();
+				
+				System.out.println("\n" + numRows61 + " row(s) updated");
+				System.out.println("\n" + numRows62 + " row(s) updated");
 				
 				break;
 			
