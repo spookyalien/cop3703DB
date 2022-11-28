@@ -1,7 +1,7 @@
 import java.sql.*;
 import java.io.*;
 
-public class G1Database {
+public class sqlproject {
 	public static void main(String args[]) throws SQLException {
 
 		System.out.print("userid: ");
@@ -312,10 +312,46 @@ public class G1Database {
 				
 			case 5:
 				System.out.println("OPTION 5 WAS CHOSEN");
+				System.out.print("Please enter the Instructor's N-Number: ");
+				String instNnum = getString();
+				
+				Statement stmnt = conn.createStatement();
+				String q5 = "SELECT SectionNum " +
+							"FROM SECTION " +
+							"WHERE ISSN IN (SELECT SSN " +
+						               "FROM INSTRUCTOR " +
+						               "WHERE Nnum = " + instNnum + ")";
+				ResultSet rset = stmnt.executeQuery(q5);
+				
+				System.out.println("Section Numbers:");
+				System.out.println("----------------");
+				
+				while (rset.next()) {
+					int sectionNum = rset.getInt("SectionNum");
+					System.out.println(sectionNum);
+				}
+				
 				break;
 				
 			case 6:
 				System.out.println("OPTION 6 WAS CHOSEN");
+				System.out.print("Enter Student SSN: ");
+				String sSSN = getString();
+				
+				System.out.print("\nEnter Letter Grade: ");
+				String lg = getString();
+				
+				System.out.print("\nEnter Grade Point: ");
+				float gp = getFloat();
+			
+				PreparedStatement stmnt6 = conn.prepareStatement("UPDATE ENROLLED_IN SET LetterGrade = ? WHERE StudSSN = ?");
+				
+				stmnt6.setString(1, lg);
+				stmnt6.setString(2, sSSN);
+				
+				int numRows6 = stmnt6.executeUpdate();
+				System.out.println("\n" + numRows6 + " row(s) inserted");
+				
 				break;
 			
 			default:
