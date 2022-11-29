@@ -335,8 +335,12 @@ public class sqlproject {
 				
 			case 6:
 				System.out.println("OPTION 6 WAS CHOSEN");
+				
 				System.out.print("Enter Student SSN: ");
 				String sSSN = getString();
+				
+				System.out.print("\nEnter Section Number: ");
+				int secNum = getInt();
 				
 				System.out.print("\nEnter Letter Grade: ");
 				String lg = getString();
@@ -344,17 +348,17 @@ public class sqlproject {
 				System.out.print("\nEnter Grade Point: ");
 				float gp = getFloat();
 			
-				PreparedStatement stmnt61 = conn.prepareStatement("UPDATE ENROLLED_IN SET LetterGrade = ? WHERE StudSSN = ?");
-				PreparedStatement stmnt62 = conn.prepareStatement("UPDATE ENROLLED_IN SET GradePoint = ? WHERE StudSSN = ?");
-				
+				PreparedStatement stmnt61 = conn.prepareStatement("UPDATE ENROLLED_IN SET LetterGrade = ? WHERE StudSSN = ? AND SectionNum = ?");
+				PreparedStatement stmnt62 = conn.prepareStatement("UPDATE ENROLLED_IN SET GradePoint = ? WHERE StudSSN = ? AND SectionNum = ?");
 				stmnt61.setString(1, lg);
 				stmnt61.setString(2, sSSN);
+				stmnt61.setInt(3, secNum);
 				stmnt62.setFloat(1, gp);
 				stmnt62.setString(2, sSSN);
+				stmnt62.setInt(3, secNum);
 				
 				int numRows61 = stmnt61.executeUpdate();
 				int numRows62 = stmnt62.executeUpdate();
-				
 				System.out.println("\n" + numRows61 + " row(s) updated");
 				System.out.println("\n" + numRows62 + " row(s) updated");
 				
