@@ -45,8 +45,8 @@ public class G1Database {
 		String Nno = getString();
 		ArrayList<String> Grades = new ArrayList<String>();
 	     
-	     try {
-	    	String q = "SELECT * " +
+	        try {
+	    		String q = "SELECT * " +
 		               "FROM STUDENT " +
 		               "WHERE Nnum= " + Nno ;
 			ResultSet rset = stmt.executeQuery(q);
