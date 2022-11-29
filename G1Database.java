@@ -2,6 +2,175 @@ import java.sql.*;
 import java.io.*;
 
 public class G1Database {
+	
+	public static void find_course(Statement stmt)
+	{
+		String DName = "";
+		System.out.println("[+] Enter a department name or code to show courses offered: ");
+		String name = getString();
+		String q = "SELECT * " +
+	               "FROM DEPARTMENT " +
+	               "WHERE DName= \'" + name + "\'" + " OR DCode= \'" + name + "\'";
+		ResultSet rset;
+		try {
+			rset = stmt.executeQuery(q);
+			if (rset.next()) {
+				String DCode = rset.getString("DCode");
+				DName = rset.getString("DName");
+				q = "SELECT * " +
+			        "FROM COURSE " +
+			        "WHERE DCode= " + DCode;
+			}
+			rset = stmt.executeQuery(q);
+			System.out.println("Courses offered by " + DName + ": ");
+			while (rset.next()) {
+				String courseName = rset.getString("courseName");
+				System.out.println("[+] " + courseName);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public static void calc_grade_report(Statement stmt, Connection conn)
+	{
+		String SSN, sectNum, courseNum;
+		SSN = courseNum = sectNum= "";
+		Double finalGPA = 0.0;
+		System.out.print("[+] Enter your N. Number: ");
+		String Nno = getString();
+		ArrayList<String> Grades = new ArrayList<String>();
+	     
+	     try {
+	    	String q = "SELECT * " +
+		               "FROM STUDENT " +
+		               "WHERE Nnum= " + Nno ;
+			ResultSet rset = stmt.executeQuery(q);
+			System.out.println("[+] Grade Report for " + Nno);
+			if (rset.next ()) {
+			       SSN = rset.getString("SSN");
+			       String fName = rset.getString("FName");
+			       String lName = rset.getString("LName");
+			       String midIn = rset.getString("MidIn");
+			       String Sex = rset.getString("MidIn");
+			       String bDate = rset.getString("BDate");
+			       String degProg = rset.getString("DegProg");
+			       String Seniority = rset.getString("Seniority");
+			       String PermPhone = rset.getString("PermPhone");
+			       String PermStreetAddress = rset.getString("PermStreetAddress");
+			       String PermCity = rset.getString("PermCity");
+			       String PermState = rset.getString("PermState");
+			       String PermZip = rset.getString("PermZip");
+			       String CurrPhone = rset.getString("CurrPhone");
+			       String CurrAddress = rset.getString("CurrAddress");
+
+					
+					System.out.println("Student");
+					System.out.println("---------------");
+					System.out.println("Name: " + fName + " " + midIn + " " + lName);
+					System.out.println("Sex: " + Sex);
+					System.out.println("Date of Birth: " + bDate);
+					System.out.println("Degree: " + degProg);
+					System.out.println("Seniority: " + Seniority);
+					System.out.println("Address (Permanent): " + PermStreetAddress + " " + PermCity + " " + PermState + ", " + PermZip);
+					System.out.println("Address (Current): " + CurrAddress);
+					System.out.println("Phone No. (Permanent): " + PermPhone);
+					System.out.println("Phone No. (Current): " + CurrPhone);
+					System.out.println();
+			}
+			
+			q = "SELECT * " +
+		        "FROM ENROLLED_IN " +
+		        "WHERE StudSSN= " + SSN;
+			rset = stmt.executeQuery(q);
+			while (rset.next()) {
+				sectNum = rset.getString("SectionNum");
+				String GPA = rset.getString("GradePoint");
+				String Grade = rset.getString("LetterGrade");
+				if (Grade == null)
+					Grade = "N/A";
+				else if (GPA == null)
+					GPA = "N/A";
+				else 
+					Grades.add(GPA);
+				String q1 = "SELECT * " +
+				    "FROM SECTION " +
+				    "WHERE SectionNum= " + sectNum;
+				
+				ResultSet rsetSect = conn.createStatement().executeQuery(q1);
+				if (rsetSect.next()) {
+					String year = rsetSect.getString("Year");
+					String sem = rsetSect.getString("Sem");
+					String issn = rsetSect.getString("ISSN");
+					courseNum = rsetSect.getString("CourseNum");
+					System.out.println("Section");
+					System.out.println("---------------");
+					System.out.println("Year: " + year);
+					System.out.println("Semester: " + sem);
+					System.out.println("issn: " + issn);
+					System.out.println("courseNum: " + courseNum);
+					System.out.println();
+				}
+				
+				String q3 = "SELECT * " +
+					"FROM COURSE " +
+					"WHERE CourseNum = " + courseNum;
+				ResultSet rsetCourse = conn.createStatement().executeQuery(q3);
+				if (rsetCourse.next()) {
+					String courseName = rsetCourse.getString("CourseName");
+					String desc = rsetCourse.getString("Description");
+					String semHours = rsetCourse.getString("SemHours");
+					String lvl = rsetCourse.getString("Lvl");
+					System.out.println("Course");
+					System.out.println("---------------");
+					System.out.println("Course Name: " + courseName);
+					System.out.println("Description: " + desc);
+					System.out.println("Semester Hours: " + semHours);
+					System.out.println("Level: " + lvl);
+					System.out.println("Grade: " + Grade);
+					System.out.println("Grade Point: " + GPA);
+					System.out.println();
+					
+				}
+			}
+			for (int i = 0; i < Grades.size(); i++) {
+				Double gradePoint = Double.parseDouble(Grades.get(i));
+				finalGPA += gradePoint;
+			}
+			finalGPA /= Grades.size();
+			System.out.println("\nOverall GPA: " + finalGPA);
+			if (finalGPA > 3) {
+				if (finalGPA == 4)
+					System.out.println("Overall Grade: A");
+				else if (finalGPA >= 3.7)
+					System.out.println("Overall Grade: A-");
+				else if (finalGPA >= 3.3)
+					System.out.println("Overall Grade: B+");
+				else
+					System.out.println("Overall Grade: B");
+			}
+			else if (finalGPA > 2) {
+				if (finalGPA >= 2.7)
+					System.out.println("Overall Grade: B-");
+				else if (finalGPA >= 2.3)
+					System.out.println("Overall Grade: C+");
+				else
+					System.out.println("Overall Grade: C");
+			}
+			else if (finalGPA > 1) {
+				System.out.println("Overall Grade: D");
+			}
+			else {
+				System.out.println("Overall Grade: F");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static void main(String args[]) throws SQLException {
 
 		System.out.print("userid: ");
@@ -304,10 +473,12 @@ public class G1Database {
 				
 			case 3:
 				System.out.println("OPTION 3 WAS CHOSEN");
+				calc_grade_report(stmt, conn);
 				break;
 				
 			case 4:
 				System.out.println("OPTION 4 WAS CHOSEN");
+				find_course(stmt);
 				break;
 				
 			case 5:
