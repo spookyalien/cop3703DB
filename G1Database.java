@@ -1,5 +1,6 @@
 import java.sql.*;
 import java.io.*;
+import java.util.ArrayList;
 
 public class G1Database {
 	
@@ -188,6 +189,7 @@ public class G1Database {
 		// Connect to the database
 		Connection conn = DriverManager.getConnection(url, uid, pword);
 
+		Statement stmt = conn.createStatement();
 		PreparedStatement pstmt11 = conn.prepareStatement ("INSERT INTO STUDENT(SSN, FName, MidIn, LName, Sex, Nnum, BDate, DegProg,"
 				+ " Seniority, PermPhone, PermStreetAddress, PermCity, PermState, PermZip, CurrPhone, CurrAddress) "
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
