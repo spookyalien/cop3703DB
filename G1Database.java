@@ -1,7 +1,7 @@
 import java.sql.*;
 import java.io.*;
 
-public class sqlproject {
+public class G1Database {
 	public static void main(String args[]) throws SQLException {
 
 		System.out.print("userid: ");
@@ -311,7 +311,7 @@ public class sqlproject {
 				break;
 				
 			case 5:
-				System.out.println("OPTION 5 WAS CHOSEN");
+				System.out.println("You chose to list an Instructor's sections.");
 				System.out.print("Please enter the Instructor's N-Number: ");
 				String instNnum = getString();
 				
@@ -334,7 +334,7 @@ public class sqlproject {
 				break;
 				
 			case 6:
-				System.out.println("OPTION 6 WAS CHOSEN");
+				System.out.println("You chose to add a grade for a student's class section.");
 				
 				System.out.print("Enter Student SSN: ");
 				String sSSN = getString();
