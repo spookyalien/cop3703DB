@@ -30,7 +30,7 @@ public class G1Database {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		
@@ -56,7 +56,7 @@ public class G1Database {
 			       String fName = rset.getString("FName");
 			       String lName = rset.getString("LName");
 			       String midIn = rset.getString("MidIn");
-			       String Sex = rset.getString("MidIn");
+			       String Sex = rset.getString("Sex");
 			       String bDate = rset.getString("BDate");
 			       String degProg = rset.getString("DegProg");
 			       String Seniority = rset.getString("Seniority");
@@ -216,7 +216,6 @@ public class G1Database {
 		PreparedStatement pstmt2 = conn.prepareStatement ("INSERT INTO ENROLLED_IN(StudSSN, SectionNum, LetterGrade, GradePoint) "
 				+ "VALUES (?, ?, NULL, NULL)");
 		
-		// TODO CREATE PREPARED STATEMENTS HERE
 
 		int exit = 1;
 
@@ -235,7 +234,6 @@ public class G1Database {
 			switch (choice) {
 				
 			case 1:
-				System.out.println("OPTION 1 WAS CHOSEN");
 				System.out.println("Would you like to add a...\n"
 						+ "1) Student\n"
 						+ "2) Department\n"
@@ -456,7 +454,6 @@ public class G1Database {
 				break;
 				
 			case 2:
-				System.out.println("OPTION 2 WAS CHOSEN");
 				
 				System.out.println("You chose to add a student to a course section.");
 				
@@ -474,12 +471,12 @@ public class G1Database {
 				break;
 				
 			case 3:
-				System.out.println("OPTION 3 WAS CHOSEN");
+				System.out.println("You chose to generate a grade report.");
 				calc_grade_report(stmt, conn);
 				break;
 				
 			case 4:
-				System.out.println("OPTION 4 WAS CHOSEN");
+				System.out.println("You chose to find a department's courses.");
 				find_course(stmt);
 				break;
 				
@@ -545,6 +542,7 @@ public class G1Database {
 			exit = getInt();
 		}
 
+		System.out.println("Have a nice day!");
 	}
 
 	public static String getString() {
