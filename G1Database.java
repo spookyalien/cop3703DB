@@ -68,19 +68,19 @@ public class G1Database {
 			       String CurrPhone = rset.getString("CurrPhone");
 			       String CurrAddress = rset.getString("CurrAddress");
 
-					
-					System.out.println("Student");
-					System.out.println("---------------");
-					System.out.println("Name: " + fName + " " + midIn + " " + lName);
-					System.out.println("Sex: " + Sex);
-					System.out.println("Date of Birth: " + bDate);
-					System.out.println("Degree: " + degProg);
-					System.out.println("Seniority: " + Seniority);
-					System.out.println("Address (Permanent): " + PermStreetAddress + " " + PermCity + " " + PermState + ", " + PermZip);
-					System.out.println("Address (Current): " + CurrAddress);
-					System.out.println("Phone No. (Permanent): " + PermPhone);
-					System.out.println("Phone No. (Current): " + CurrPhone);
-					System.out.println();
+				
+			       System.out.println("Student");
+			       System.out.println("---------------");
+			       System.out.println("Name: " + fName + " " + midIn + " " + lName);
+			       System.out.println("Sex: " + Sex);
+			       System.out.println("Date of Birth: " + bDate);
+			       System.out.println("Degree: " + degProg);
+			       System.out.println("Seniority: " + Seniority);
+			       System.out.println("Address (Permanent): " + PermStreetAddress + " " + PermCity + " " + PermState + ", " + PermZip);
+			       System.out.println("Address (Current): " + CurrAddress);
+			       System.out.println("Phone No. (Permanent): " + PermPhone);
+			       System.out.println("Phone No. (Current): " + CurrPhone);
+			       System.out.println();
 			}
 			
 			q = "SELECT * " +
