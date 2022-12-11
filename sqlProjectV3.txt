@@ -25,6 +25,7 @@ CREATE TABLE STUDENT(
     PermZip CHAR(5) NOT NULL,
     CurrPhone CHAR(10) NOT NULL,
     CurrAddress VARCHAR(100) NOT NULL,
+    UNIQUE (Nnum),
     
     PRIMARY KEY (SSN)
 );
@@ -53,6 +54,8 @@ CREATE TABLE INSTRUCTOR (
     MidIn CHAR(1),
     LName VARCHAR(20) NOT NULL,
     DCode CHAR(4),
+    Address VARCHAR(50),
+    UNIQUE (Nnum),
     
     PRIMARY KEY (SSN),
     FOREIGN KEY (DCode) REFERENCES DEPARTMENT(DCode)
@@ -136,10 +139,10 @@ insert into COURSE values(4233,'Microbial Ecology','This is a test course',3,400
 insert into COURSE values(4201,'Organization Theory','This is a test course',3,4000,'3300');
 insert into COURSE values(3703,'Intro to Databases','This is a test course',3,3000,'0011');
 insert into COURSE values(2049,'Calc-Physics 2','This is a test course',3,2000,'5888');
-insert into INSTRUCTOR values('111111111','01492014','Jacksonville','FL',32225,152384,38,'John','H','Smith','7725');
-insert into INSTRUCTOR values('222222222','01492013','Jacksonville','FL',32224,151384,34,'Vincent','J','Bistricky','3300');
-insert into INSTRUCTOR values('333333333','01492012','Jacksonville','FL',32223,150384,42,'Liam','S','Hanson','0011');
-insert into INSTRUCTOR values('444444444','01492011','Jacksonville','FL',32223,154298,57,'Fred','L','Poorlum','5888');
+insert into INSTRUCTOR values('111111111','01492014','Jacksonville','FL',32225,152384,38,'John','H','Smith','7725', 'test address 1');
+insert into INSTRUCTOR values('222222222','01492013','Jacksonville','FL',32224,151384,34,'Vincent','J','Bistricky','3300', 'test address 2');
+insert into INSTRUCTOR values('333333333','01492012','Jacksonville','FL',32223,150384,42,'Liam','S','Hanson','0011', 'test address 3');
+insert into INSTRUCTOR values('444444444','01492011','Jacksonville','FL',32223,154298,57,'Fred','L','Poorlum','5888', 'test address 4');
 
 INSERT INTO SECTION 
 VALUES ('2022', 'Fall', 1234567, '111111111', 3703);
