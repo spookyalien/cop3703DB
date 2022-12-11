@@ -54,7 +54,7 @@ CREATE TABLE INSTRUCTOR (
     MidIn CHAR(1),
     LName VARCHAR(20) NOT NULL,
     DCode CHAR(4),
-    Address VARCHAR(50),
+    StreetAddress VARCHAR(50),
     UNIQUE (Nnum),
     
     PRIMARY KEY (SSN),
