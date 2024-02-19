@@ -7,5 +7,5 @@ This program ensures to represent relationships between elements. For example, t
 The diagram showing relationships is attached and displays the entity relationships between objects.
 
 ## Collaboration
-This project was done in collaboration with the contributors attached to this Github project.
+This project was done in collaboration with the contributors attached to this Github project. As part of the guidelines, this project was developed using Agile and Scrum methodologies with a weekly sprint plan and review to ensure timely delivery.
 
